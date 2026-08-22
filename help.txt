@@ -1,0 +1,35 @@
+کتابخونه های زیرو نصب کنید
+pip uninstall -y pyrogram && pip install pyrotgfork
+pip install datetime
+pip install apscheduler
+pip install pytz
+pip install --upgrade python-telegram-bot
+
+فایل bot.py
+از خط 9 تا 21 ادیت بشه
+خط های 24 و 25 و 26 هم در صورت نیاز تغییر بدید
+فایل helper.py
+
+خط های 9 و 15 و 16 و اگر لینک عکس دارید 13 اگر ندارید از ربات تنظیم کنید
+
+فایل self.py
+
+خط 18 و 23 و 24 اطلاعات جایگذاری بشه
+
+فقط دوتا فایل رو ران کنید یکی
+
+bot.py
+
+و دیگری
+
+helper.py
+
+مهم مهم مهم 👇
+
+تنظیمات هلپر توی botfather
+
+دستور زیر رو توی بات فادر بفرستید
+
+/setinlinefeedback
+
+و سپس ربات هلپر رو انتخاب کرده و گزینه  Enabled رو بزنید

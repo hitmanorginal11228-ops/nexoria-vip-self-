@@ -1,0 +1,7 @@
+pyrotgfork
+tgcrypto
+python-telegram-bot
+APScheduler
+pytz
+requests
+aiohttp

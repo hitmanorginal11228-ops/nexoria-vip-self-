@@ -1,0 +1,50 @@
+services:
+  # ربات مدیریت / فروش (bot.py)
+  - type: worker
+    name: selfsaz-bot
+    env: python
+    plan: starter
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python bot.py"
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: API_ID
+        sync: false
+      - key: API_HASH
+        sync: false
+      - key: ADMIN_ID
+        sync: false
+      - key: FORCE_CHANNELS
+        sync: false
+      - key: TAX_PERCENT
+        value: "10"
+      - key: TAX_MIN_AMOUNT
+        value: "2"
+      - key: COIN_RATE
+        value: "1440"
+      - key: COIN_PRICE_TOMAN
+        value: "50000"
+      - key: CARD_NUMBER
+        sync: false
+      - key: CARD_OWNER
+        sync: false
+      - key: BANK_NAME
+        sync: false
+
+  # ربات هلپر (helper.py)
+  - type: worker
+    name: selfsaz-helper
+    env: python
+    plan: starter
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python helper.py"
+    envVars:
+      - key: HELPER_BOT_TOKEN
+        sync: false
+      - key: ADMIN_ID
+        sync: false
+      - key: PANEL_IMAGE
+        value: "link"
+      - key: MANAGER_BOT_LINK
+        sync: false
