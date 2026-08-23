@@ -12,9 +12,14 @@ import os
 import sys
 import signal
 import subprocess
+import threading
 import time
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# پورتی که Render برای Web Service به‌صورت خودکار توی متغیر PORT میده
+PORT = int(os.environ.get("PORT", "10000"))
 
 # نام فایل‌هایی که باید هم‌زمان اجرا بشن
 SERVICES = [
@@ -24,6 +29,24 @@ SERVICES = [
 
 processes = {}
 _shutting_down = False
+
+
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.end_headers()
+        self.wfile.write("Bot is running ✅".encode("utf-8"))
+
+    def log_message(self, format, *args):
+        # لاگ‌های تکراری هلث‌چک رو خاموش می‌کنیم که کنسول شلوغ نشه
+        pass
+
+
+def start_health_server():
+    server = HTTPServer(("0.0.0.0", PORT), HealthCheckHandler)
+    print(f"🌐 وب‌سرور سلامت روی پورت {PORT} بالا اومد (برای Render Web Service)")
+    server.serve_forever()
 
 
 def start_service(service):
@@ -64,6 +87,10 @@ def handle_signal(signum, frame):
 def main():
     signal.signal(signal.SIGINT, handle_signal)
     signal.signal(signal.SIGTERM, handle_signal)
+
+    # وب‌سرور سلامت رو توی یک ترد جدا اجرا کن تا Render سرویس رو "Live" ببینه
+    health_thread = threading.Thread(target=start_health_server, daemon=True)
+    health_thread.start()
 
     for service in SERVICES:
         start_service(service)
