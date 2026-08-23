@@ -1,4 +1,52 @@
 services:
+  # ------------------------------------------------------------------
+  # گزینه‌ی ۱ (پیشنهادی): یک سرویس واحد که هم بات و هم هلپر رو با هم
+  # از طریق app.py روشن می‌کنه. اگه از این استفاده می‌کنید، سرویس‌های
+  # زیر (selfsaz-bot و selfsaz-helper) رو کامنت/حذف کنید.
+  # ------------------------------------------------------------------
+  - type: worker
+    name: selfsaz-app
+    env: python
+    plan: starter
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python app.py"
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: API_ID
+        sync: false
+      - key: API_HASH
+        sync: false
+      - key: ADMIN_ID
+        sync: false
+      - key: FORCE_CHANNELS
+        sync: false
+      - key: TAX_PERCENT
+        value: "10"
+      - key: TAX_MIN_AMOUNT
+        value: "2"
+      - key: COIN_RATE
+        value: "1440"
+      - key: COIN_PRICE_TOMAN
+        value: "50000"
+      - key: CARD_NUMBER
+        sync: false
+      - key: CARD_OWNER
+        sync: false
+      - key: BANK_NAME
+        sync: false
+      - key: HELPER_BOT_TOKEN
+        sync: false
+      - key: PANEL_IMAGE
+        value: "link"
+      - key: MANAGER_BOT_LINK
+        sync: false
+
+  # ------------------------------------------------------------------
+  # گزینه‌ی ۲: دو سرویس جدا (اگه ترجیح می‌دید بات و هلپر مستقل از هم
+  # ری‌استارت/اسکیل بشن). اگه از گزینه‌ی ۱ استفاده می‌کنید این دو تا رو
+  # کامنت کنید تا با هم قاطی اجرا نشن.
+  # ------------------------------------------------------------------
   # ربات مدیریت / فروش (bot.py)
   - type: worker
     name: selfsaz-bot
